@@ -1,4 +1,5 @@
 import * as React from "react";
+import axios from "axios";
 import { Link as RouterLink } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -14,14 +15,24 @@ import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Copyright from "../../shared/components/copyright";
 
+const { REACT_APP_SITE_URL } = process.env;
 export default function Login() {
+  const logUser = (token) => {
+    // eslint-disable-next-line no-console
+    console.log(token);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+    const formData = new FormData(event.currentTarget);
+    const data = {
+      user: {
+        email: formData.get("email"),
+        password: formData.get("password"),
+      },
+    };
+    axios.post(`${REACT_APP_SITE_URL}/api/users/login/`, data).then((res) => {
+      logUser(res.data.token);
     });
   };
 

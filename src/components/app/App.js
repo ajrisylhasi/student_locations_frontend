@@ -11,6 +11,7 @@ import React from "react";
 import Provider from "../provider/Provider";
 import Login from "../login/Login";
 import Register from "../register/Register";
+import Home from "../home/Home";
 
 function App() {
   return (
@@ -28,8 +29,7 @@ function App() {
               <Register />
             </Route>
             <Route path={["", "/"]}>
-              <p>Main Page</p>
-              <p>hello</p>
+              <Home />
             </Route>
             <Route>
               <Redirect to="/" />
