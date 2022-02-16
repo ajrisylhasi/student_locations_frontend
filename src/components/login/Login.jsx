@@ -1,6 +1,7 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,15 +14,31 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
+import { storeContext } from "../provider/Provider";
 import Copyright from "../../shared/components/copyright";
+import { authActions } from "../../store/auth-reducer";
 
 const { REACT_APP_SITE_URL } = process.env;
-export default function Login() {
+const Login = () => {
+  const history = useHistory();
+  const [cookies, setCookie] = useCookies(["auth"]);
+  const { dispatch } = React.useContext(storeContext);
+
   const logUser = (token) => {
-    // eslint-disable-next-line no-console
-    console.log(token);
+    setCookie("id", token.data.token, {
+      path: "/",
+      maxAge: 1209600,
+    });
+    dispatch({
+      type: authActions.SET_LOGGED_IN,
+      payload: {
+        isLoggedIn: true,
+      },
+    });
+    history.push("/");
   };
 
+  const catchErrors = () => {};
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -31,10 +48,21 @@ export default function Login() {
         password: formData.get("password"),
       },
     };
-    axios.post(`${REACT_APP_SITE_URL}/api/users/login/`, data).then((res) => {
-      logUser(res.data.token);
-    });
+    axios
+      .post(`${REACT_APP_SITE_URL}/api/users/login/`, data)
+      .then((res) => {
+        logUser(res);
+      })
+      .catch((e) => {
+        catchErrors(e?.response?.data.errors);
+      });
   };
+
+  useEffect(() => {
+    if (cookies.id) {
+      history.push("/");
+    }
+  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -72,7 +100,6 @@ export default function Login() {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -103,4 +130,5 @@ export default function Login() {
       <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
   );
-}
+};
+export default Login;
