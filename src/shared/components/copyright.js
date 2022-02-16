@@ -11,7 +11,7 @@ export default function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://ajri.dev/">
+      <Link color="inherit" href="https://ajri.dev/" target="_blank">
         ajri.dev
       </Link>{" "}
       {new Date().getFullYear()}.
