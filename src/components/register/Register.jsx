@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link as RouterLink } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-// import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
@@ -11,10 +10,10 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Copyright from "../../shared/components/copyright";
+import Copyright from "../../shared/components/Copyright";
 
 const { REACT_APP_SITE_URL } = process.env;
-export default function Register() {
+const Register = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -101,4 +100,6 @@ export default function Register() {
       <Copyright sx={{ mt: 5 }} />
     </Container>
   );
-}
+};
+
+export default Register;
