@@ -5,18 +5,16 @@ import {
   Switch,
 } from "react-router-dom";
 import React from "react";
-// import { ThemeProvider } from "@mui/material/styles";
-// // import { Typography } from "@material-ui/core";
-// import theme from "../../theme";
+import { ThemeProvider } from "@mui/material";
 import Provider from "../provider/Provider";
 import Login from "../login/Login";
 import Register from "../register/Register";
-// import Home from "../home/Home";
 import Layout from "../layout/Layout";
+import generalTheme from "../../theme";
 
-function App() {
-  return (
-    <Provider>
+const App = () => (
+  <Provider>
+    <ThemeProvider theme={generalTheme}>
       <div className="root" data-testid="app_test_id">
         <Router>
           <Switch>
@@ -38,8 +36,8 @@ function App() {
           </Switch>
         </Router>
       </div>
-    </Provider>
-  );
-}
+    </ThemeProvider>
+  </Provider>
+);
 
 export default App;

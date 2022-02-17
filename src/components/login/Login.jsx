@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { storeContext } from "../provider/Provider";
-import Copyright from "../../shared/components/copyright";
+import Copyright from "../../shared/components/Copyright";
 import { authActions } from "../../store/auth-reducer";
 
 const { REACT_APP_SITE_URL } = process.env;
@@ -100,6 +100,7 @@ const Login = () => {
             label="Password"
             type="password"
             id="password"
+            autoComplete="password"
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
