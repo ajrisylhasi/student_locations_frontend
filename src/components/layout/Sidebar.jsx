@@ -10,8 +10,8 @@ import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import AppBar from "../../shared/components/AppBar";
 import Drawer from "../../shared/components/Drawer";
-import MainListItems from "../home/MainListItems";
-import SecondaryListItems from "../home/SecondaryListItems";
+import MainListItems from "./MainListItems";
+import SecondaryListItems from "./SecondaryListItems";
 
 const Sidebar = () => {
   const [open, setOpen] = React.useState(true);
