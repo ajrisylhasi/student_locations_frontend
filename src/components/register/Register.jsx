@@ -24,10 +24,7 @@ const Register = () => {
         username: formData.get("username"),
       },
     };
-    axios.post(`${REACT_APP_SITE_URL}/api/users/`, data).then((res) => {
-      // eslint-disable-next-line no-console
-      console.log(res);
-    });
+    axios.post(`${REACT_APP_SITE_URL}/api/users/`, data);
   };
 
   return (
