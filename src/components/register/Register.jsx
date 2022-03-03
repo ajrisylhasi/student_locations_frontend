@@ -1,6 +1,6 @@
 import * as React from "react";
 import axios from "axios";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -14,6 +14,8 @@ import Copyright from "../../shared/components/Copyright";
 
 const { REACT_APP_SITE_URL } = process.env;
 const Register = () => {
+  const history = useHistory();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -24,7 +26,9 @@ const Register = () => {
         username: formData.get("username"),
       },
     };
-    axios.post(`${REACT_APP_SITE_URL}/api/users/`, data);
+    axios.post(`${REACT_APP_SITE_URL}/api/users/`, data).then(() => {
+      history.push("/login");
+    });
   };
 
   return (
