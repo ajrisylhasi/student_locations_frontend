@@ -7,8 +7,8 @@ import {
 import React from "react";
 import { ThemeProvider } from "@mui/material";
 import Provider from "../provider/Provider";
-import Login from "../login/Login";
-import Register from "../register/Register";
+import Login from "../users/Login";
+import Register from "../users/Register";
 import Layout from "../layout/Layout";
 import generalTheme from "../../theme";
 
@@ -27,7 +27,7 @@ const App = () => (
             <Route path={["/register/:email/:code", "/register"]}>
               <Register />
             </Route>
-            <Route path={["", "/"]}>
+            <Route path={["", "/", "/settings"]}>
               <Layout />
             </Route>
             <Route>

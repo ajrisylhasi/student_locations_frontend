@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -8,10 +9,12 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
+import Box from "@mui/material/Box";
 import AppBar from "../../shared/components/AppBar";
 import Drawer from "../../shared/components/Drawer";
 import MainListItems from "./MainListItems";
 import SecondaryListItems from "./SecondaryListItems";
+import logo from "../../images/logo.svg";
 
 const Sidebar = () => {
   const [open, setOpen] = React.useState(true);
@@ -60,13 +63,24 @@ const Sidebar = () => {
           sx={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "flex-end",
             px: [1],
           }}
         >
-          <IconButton onClick={toggleDrawer}>
-            <ChevronLeftIcon />
-          </IconButton>
+          <Box width="50%">
+            <Link to="/">
+              <img
+                src={logo}
+                alt="Debrecen Student Locations"
+                width="50px"
+                height="50px"
+              />
+            </Link>
+          </Box>
+          <Box width="50%" textAlign="right">
+            <IconButton onClick={toggleDrawer}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </Box>
         </Toolbar>
         <Divider />
         <List component="nav">

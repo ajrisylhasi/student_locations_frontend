@@ -2,15 +2,16 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { Route, useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import Settings from "components/users/Settings";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Home from "../home/Home";
-import Register from "../register/Register";
 import { storeContext } from "../provider/Provider";
 import { authActions } from "../../store/auth-reducer";
 import Sidebar from "./Sidebar";
+import Copyright from "../../shared/components/Copyright";
 
 const { REACT_APP_SITE_URL } = process.env;
 
@@ -40,7 +41,6 @@ const Layout = () => {
     if (cookies.id) {
       axios.defaults.headers.common.Authorization = cookies.id;
       getData();
-      history.push("/");
     } else {
       history.push("/login");
     }
@@ -68,8 +68,9 @@ const Layout = () => {
             <Home />
           </Route>
           <Route path="/settings">
-            <Register />
+            <Settings />
           </Route>
+          <Copyright sx={{ mt: 5 }} />
         </Container>
       </Box>
     </Box>

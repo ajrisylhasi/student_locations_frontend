@@ -13,6 +13,7 @@ import { storeContext } from "../provider/Provider";
 const SecondaryListItems = () => {
   const { dispatch } = React.useContext(storeContext);
   const history = useHistory();
+
   const handleLogout = () => {
     dispatch({ type: authActions.LOGOUT });
     history.push("/login");
@@ -29,7 +30,7 @@ const SecondaryListItems = () => {
         </ListItemIcon>
         <ListItemText primary="Profile" />
       </ListItemButton>
-      <ListItemButton>
+      <ListItemButton onClick={() => history.push("/settings")}>
         <ListItemIcon>
           <SettingsIcon />
         </ListItemIcon>

@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 function deleteAllCookies() {
   Object.keys(Cookies.get()).forEach((cookieName) => {
@@ -8,20 +8,20 @@ function deleteAllCookies() {
 
 const initialAuthState = {
   isLoggedIn: false,
-  loginInput: '',
-  passwordInput: '',
+  loginInput: "",
+  passwordInput: "",
   isLoginInputError: false,
   isPasswordInputError: false,
   loginErrorMessage: null,
   passwordErrorMessage: null,
 
   passwordChange: {
-    emailInput: '',
-    codeInput: '',
-    newPasswordInput: '',
-    emailInputError: '',
-    codeInputError: '',
-    newPasswordInputError: '',
+    emailInput: "",
+    codeInput: "",
+    newPasswordInput: "",
+    emailInputError: "",
+    codeInputError: "",
+    newPasswordInputError: "",
     isEmailInputError: false,
     isCodeInputError: false,
     isNewPasswordInputError: false,
@@ -31,35 +31,38 @@ const initialAuthState = {
   },
 
   user: {
-    name: '',
-    email: '',
-    role: '',
-    imageSrc: '',
-    alternateEmail: '',
+    email: "",
+    fullname: "",
+    faculty: "",
+    course: "",
+    nationality: "",
   },
 };
 
 const authActions = {
-  AUTH_SET_ALL: 'AUTH_SET_ALL',
-  SET_LOGIN_INPUT: 'SET_LOGIN_INPUT',
-  SET_PASSWORD_INPUT: 'SET_PASSWORD_INPUT',
-  SET_LOGIN_INPUT_ERROR: 'SET_LOGIN_INPUT_ERROR',
-  SET_PASSWORD_INPUT_ERROR: 'SET_PASSWORD_INPUT_ERROR',
-  SET_CHANGE_PASSWORD_PAGE_EMAIL_INPUT: 'SET_CHANGE_PASSWORD_PAGE_EMAIL_INPUT',
-  SET_CHANGE_PASSWORD_PAGE_CODE_INPUT: 'SET_CHANGE_PASSWORD_PAGE_CODE_INPUT',
-  SET_CHANGE_PASSWORD_PAGE_NEW_PASSWORD_INPUT: 'SET_CHANGE_PASSWORD_PAGE_NEW_PASSWORD_INPUT',
-  SET_CHANGE_PASSWORD_PAGE_CODE_INPUT_ERROR: 'SET_CHANGE_PASSWORD_PAGE_CODE_INPUT_ERROR',
-  SET_CHANGE_PASSWORD_PAGE_EMAIL_INPUT_ERROR: 'SET_CHANGE_PASSWORD_PAGE_EMAIL_INPUT_ERROR',
+  AUTH_SET_ALL: "AUTH_SET_ALL",
+  SET_LOGIN_INPUT: "SET_LOGIN_INPUT",
+  SET_PASSWORD_INPUT: "SET_PASSWORD_INPUT",
+  SET_LOGIN_INPUT_ERROR: "SET_LOGIN_INPUT_ERROR",
+  SET_PASSWORD_INPUT_ERROR: "SET_PASSWORD_INPUT_ERROR",
+  SET_CHANGE_PASSWORD_PAGE_EMAIL_INPUT: "SET_CHANGE_PASSWORD_PAGE_EMAIL_INPUT",
+  SET_CHANGE_PASSWORD_PAGE_CODE_INPUT: "SET_CHANGE_PASSWORD_PAGE_CODE_INPUT",
+  SET_CHANGE_PASSWORD_PAGE_NEW_PASSWORD_INPUT:
+    "SET_CHANGE_PASSWORD_PAGE_NEW_PASSWORD_INPUT",
+  SET_CHANGE_PASSWORD_PAGE_CODE_INPUT_ERROR:
+    "SET_CHANGE_PASSWORD_PAGE_CODE_INPUT_ERROR",
+  SET_CHANGE_PASSWORD_PAGE_EMAIL_INPUT_ERROR:
+    "SET_CHANGE_PASSWORD_PAGE_EMAIL_INPUT_ERROR",
   SET_CHANGE_PASSWORD_PAGE_NEW_PASSWORD_INPUT_ERROR:
-    'SET_CHANGE_PASSWORD_PAGE_NEW_PASSWORD_INPUT_ERROR',
-  CLEAR_LOGIN_INPUTS: 'CLEAR_LOGIN_INPUTS',
-  SET_USER: 'SET_USER',
-  SET_LOGGED_IN: 'SET_LOGGED_IN',
-  LOGOUT: 'LOGOUT',
-  SET_IS_PASSWORD_CHANGED: 'SET_IS_PASSWORD_CHANGED',
-  SET_IS_EMAIL_PROVIDED: 'SET_IS_EMAIL_PROVIDED',
-  CLEAR_PASSWORD_CHANGE: 'CLEAR_PASSWORD_CHANGE',
-  SET_IS_CODE_FROM_URL: 'SET_IS_CODE_FROM_URL',
+    "SET_CHANGE_PASSWORD_PAGE_NEW_PASSWORD_INPUT_ERROR",
+  CLEAR_LOGIN_INPUTS: "CLEAR_LOGIN_INPUTS",
+  SET_USER: "SET_USER",
+  SET_LOGGED_IN: "SET_LOGGED_IN",
+  LOGOUT: "LOGOUT",
+  SET_IS_PASSWORD_CHANGED: "SET_IS_PASSWORD_CHANGED",
+  SET_IS_EMAIL_PROVIDED: "SET_IS_EMAIL_PROVIDED",
+  CLEAR_PASSWORD_CHANGE: "CLEAR_PASSWORD_CHANGE",
+  SET_IS_CODE_FROM_URL: "SET_IS_CODE_FROM_URL",
 };
 
 function authReducer(state, action) {
@@ -69,7 +72,10 @@ function authReducer(state, action) {
         ...state,
         ...action.payload,
         user: { ...state.user, ...action.payload.user },
-        passwordChange: { ...state.passwordChange, ...action.payload.passwordChange },
+        passwordChange: {
+          ...state.passwordChange,
+          ...action.payload.passwordChange,
+        },
       };
     case authActions.SET_LOGIN_INPUT:
       return { ...state, loginInput: action.payload.loginInput };
@@ -90,21 +96,21 @@ function authReducer(state, action) {
     case authActions.SET_LOGGED_IN:
       return {
         ...state,
-        passwordInput: '',
+        passwordInput: "",
         isLoggedIn: action.payload.isLoggedIn,
       };
     case authActions.SET_USER:
       return {
         ...state,
-        passwordInput: '',
+        passwordInput: "",
         isLoggedIn: action.payload.isLoggedIn,
         user: action.payload.user,
       };
     case authActions.CLEAR_LOGIN_INPUTS:
       return {
         ...state,
-        loginInput: '',
-        passwordInput: '',
+        loginInput: "",
+        passwordInput: "",
         isLoginInputError: false,
         isPasswordInputError: false,
         loginErrorMessage: null,
@@ -157,12 +163,12 @@ function authReducer(state, action) {
       return {
         ...state,
         passwordChange: {
-          emailInput: '',
-          codeInput: '',
-          newPasswordInput: '',
-          emailInputError: '',
-          codeInputError: '',
-          newPasswordInputError: '',
+          emailInput: "",
+          codeInput: "",
+          newPasswordInput: "",
+          emailInputError: "",
+          codeInputError: "",
+          newPasswordInputError: "",
           isEmailInputError: false,
           isCodeInputError: false,
           isNewPasswordInputError: false,
