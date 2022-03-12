@@ -9,7 +9,7 @@ const storeContext = createContext({});
 
 export { storeContext };
 
-function Provider({ children }) {
+const Provider = ({ children }) => {
   const [state, dispatch] = React.useReducer(reducer, store);
   const providerMemo = useMemo(() => ({ state, dispatch }), [state]);
 
@@ -18,7 +18,7 @@ function Provider({ children }) {
       {children}
     </storeContext.Provider>
   );
-}
+};
 
 Provider.propTypes = {
   children: PropTypes.node.isRequired,
