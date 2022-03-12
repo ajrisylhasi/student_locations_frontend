@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-computed-key */
 import { createTheme } from "@material-ui/core/styles";
 
 const theme = createTheme({
@@ -7,11 +6,11 @@ const theme = createTheme({
   },
   breakpoints: {
     values: {
-      xs: 500,
-      sm: 768,
-      md: 992,
-      lg: 1260,
-      xl: 1920,
+      xs: 0,
+      sm: 420,
+      md: 768,
+      lg: 992,
+      xl: 1260,
     },
   },
 });
