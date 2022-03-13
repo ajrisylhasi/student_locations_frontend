@@ -4,15 +4,22 @@ import PropTypes from "prop-types";
 
 const { REACT_APP_MAPS_API_KEY } = process.env;
 
-const Map = ({ lat, lng, zoom, children }) => (
+const Map = ({ lat, lng, zoom, children, ...props }) => (
   <GoogleMapReact
     bootstrapURLKeys={{
       key: `${REACT_APP_MAPS_API_KEY}`,
     }}
-    options={{ keyboardShortcuts: false, zoomControl: false }}
+    options={(map) => ({
+      keyboardShortcuts: false,
+      zoomControl: false,
+      fullscreenControl: false,
+      mapTypeControl: true,
+      mapTypeId: map.MapTypeId.HYBRID,
+    })}
     defaultCenter={{ lat, lng }}
     defaultZoom={zoom}
     onClick={(coord) => console.log(coord)}
+    {...props}
   >
     {children}
   </GoogleMapReact>
