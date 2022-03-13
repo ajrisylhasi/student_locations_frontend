@@ -10,16 +10,20 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import Box from "@mui/material/Box";
-import AppBar from "../../shared/components/AppBar";
-import Drawer from "../../shared/components/Drawer";
-import MainListItems from "./MainListItems";
-import SecondaryListItems from "./SecondaryListItems";
-import logo from "../../images/logo.svg";
+import AppBar from "shared/components/AppBar";
+import Drawer from "shared/components/Drawer";
+import logo from "images/logo.svg";
+import MainListItems from "components/layout/MainListItems";
+import SecondaryListItems from "components/layout/SecondaryListItems";
 
 const Sidebar = () => {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+
+  const closeDrawer = () => {
+    setOpen(false);
   };
 
   return (
@@ -84,9 +88,9 @@ const Sidebar = () => {
         </Toolbar>
         <Divider />
         <List component="nav">
-          <MainListItems />
+          <MainListItems closeDrawer={closeDrawer} />
           <Divider sx={{ my: 1 }} />
-          <SecondaryListItems />
+          <SecondaryListItems closeDrawer={closeDrawer} />
         </List>
       </Drawer>
     </>

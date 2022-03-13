@@ -20,7 +20,7 @@ const Layout = () => {
   const { dispatch } = React.useContext(storeContext);
   const [cookies] = useCookies(["auth"]);
 
-  const getData = () => {
+  const getMeData = () => {
     axios.get(`${REACT_APP_SITE_URL}/api/me/`).then((res) => {
       dispatch({
         type: authActions.AUTH_SET_ALL,
@@ -40,7 +40,7 @@ const Layout = () => {
   useEffect(() => {
     if (cookies.id) {
       axios.defaults.headers.common.Authorization = cookies.id;
-      getData();
+      getMeData();
     } else {
       history.push("/login");
     }
@@ -60,10 +60,12 @@ const Layout = () => {
           flexGrow: 1,
           height: "100vh",
           overflow: "auto",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Container sx={{ height: "100%", mt: 4, mb: 4 }}>
           <Route exact path="/">
             <Home />
           </Route>

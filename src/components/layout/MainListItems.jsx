@@ -7,13 +7,19 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import ThumbsUpDown from "@mui/icons-material/ThumbsUpDown";
+import PropTypes from "prop-types";
 
-const MainListItems = () => {
+const MainListItems = ({ closeDrawer }) => {
   const history = useHistory();
 
   return (
     <>
-      <ListItemButton onClick={() => history.push("/")}>
+      <ListItemButton
+        onClick={() => {
+          history.push("/");
+          closeDrawer();
+        }}
+      >
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
@@ -39,5 +45,9 @@ const MainListItems = () => {
       </ListItemButton>
     </>
   );
+};
+
+MainListItems.propTypes = {
+  closeDrawer: PropTypes.func.isRequired,
 };
 export default MainListItems;

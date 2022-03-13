@@ -1,10 +1,9 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import GoogleMapReact from "google-map-react";
+import CustomMap from "components/maps/CustomMap";
+import Marker from "components/maps/Marker";
 import Deposits from "./Deposits";
-
-const { REACT_APP_MAPS_API_KEY } = process.env;
 
 const HomeContent = () => (
   <Grid container spacing={3}>
@@ -29,18 +28,9 @@ const HomeContent = () => (
           height: 240,
         }}
       >
-        <GoogleMapReact
-          bootstrapURLKeys={{
-            key: `${REACT_APP_MAPS_API_KEY}`,
-          }}
-          options={{ keyboardShortcuts: false }}
-          defaultCenter={{ lat: 47.5289, lng: 21.6254 }}
-          defaultZoom={14}
-        >
-          <p lat={47.5289} lng={21.6254}>
-            Ajri
-          </p>
-        </GoogleMapReact>
+        <CustomMap lng={21.6254} zoom={14} lat={47.5289}>
+          <Marker lat={47.5289} lng={21.6254} text="This is a test marker" />
+        </CustomMap>
       </Paper>
     </Grid>
   </Grid>

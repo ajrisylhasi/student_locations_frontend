@@ -7,10 +7,11 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useHistory } from "react-router-dom";
-import { authActions } from "../../store/auth-reducer";
-import { storeContext } from "../provider/Provider";
+import PropTypes from "prop-types";
+import { authActions } from "store/auth-reducer";
+import { storeContext } from "components/provider/Provider";
 
-const SecondaryListItems = () => {
+const SecondaryListItems = ({ closeDrawer }) => {
   const { dispatch } = React.useContext(storeContext);
   const history = useHistory();
 
@@ -30,7 +31,12 @@ const SecondaryListItems = () => {
         </ListItemIcon>
         <ListItemText primary="Profile" />
       </ListItemButton>
-      <ListItemButton onClick={() => history.push("/settings")}>
+      <ListItemButton
+        onClick={() => {
+          history.push("/settings");
+          closeDrawer();
+        }}
+      >
         <ListItemIcon>
           <SettingsIcon />
         </ListItemIcon>
@@ -44,5 +50,9 @@ const SecondaryListItems = () => {
       </ListItemButton>
     </>
   );
+};
+
+SecondaryListItems.propTypes = {
+  closeDrawer: PropTypes.func.isRequired,
 };
 export default SecondaryListItems;
