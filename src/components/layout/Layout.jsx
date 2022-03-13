@@ -7,11 +7,10 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Home from "../home/Home";
-import { storeContext } from "../provider/Provider";
-import { authActions } from "../../store/auth-reducer";
-import Sidebar from "./Sidebar";
-import Copyright from "../../shared/components/Copyright";
+import Home from "components/home/Home";
+import { authActions } from "store/auth-reducer";
+import { storeContext } from "components/provider/Provider";
+import Sidebar from "components/layout/Sidebar";
 
 const { REACT_APP_SITE_URL } = process.env;
 
@@ -65,14 +64,14 @@ const Layout = () => {
         }}
       >
         <Toolbar />
-        <Container sx={{ height: "100%", mt: 4, mb: 4 }}>
+        <Container sx={{ height: "100%", mt: 3 }}>
           <Route exact path="/">
             <Home />
           </Route>
           <Route path="/settings">
             <Settings />
           </Route>
-          <Copyright sx={{ mt: 5 }} />
+          {/* <Copyright sx={{ mt: 5 }} /> */}
         </Container>
       </Box>
     </Box>

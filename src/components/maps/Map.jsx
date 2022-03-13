@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const { REACT_APP_MAPS_API_KEY } = process.env;
 
-const CustomMap = ({ lat, lng, zoom, children }) => (
+const Map = ({ lat, lng, zoom, children }) => (
   <GoogleMapReact
     bootstrapURLKeys={{
       key: `${REACT_APP_MAPS_API_KEY}`,
@@ -12,16 +12,17 @@ const CustomMap = ({ lat, lng, zoom, children }) => (
     options={{ keyboardShortcuts: false, zoomControl: false }}
     defaultCenter={{ lat, lng }}
     defaultZoom={zoom}
+    onClick={(coord) => console.log(coord)}
   >
     {children}
   </GoogleMapReact>
 );
 
-CustomMap.propTypes = {
+Map.propTypes = {
   lat: PropTypes.number.isRequired,
   lng: PropTypes.number.isRequired,
   zoom: PropTypes.number.isRequired,
   children: PropTypes.node.isRequired,
 };
 
-export default CustomMap;
+export default Map;

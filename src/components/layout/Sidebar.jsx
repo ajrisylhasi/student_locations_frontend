@@ -1,4 +1,5 @@
 import React from "react";
+import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -15,9 +16,13 @@ import Drawer from "shared/components/Drawer";
 import logo from "images/logo.svg";
 import MainListItems from "components/layout/MainListItems";
 import SecondaryListItems from "components/layout/SecondaryListItems";
+import MobileDrawer from "./MobileDrawer";
 
 const Sidebar = () => {
   const [open, setOpen] = React.useState(false);
+
+  const isPhone = useMediaQuery({ query: "(max-width: 768px)" });
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -26,9 +31,43 @@ const Sidebar = () => {
     setOpen(false);
   };
 
+  const drawerContent = () => (
+    <>
+      <Toolbar
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          px: [1],
+        }}
+      >
+        <Box width="50%">
+          <Link to="/">
+            <img
+              src={logo}
+              alt="Debrecen Student Locations"
+              width="50px"
+              height="50px"
+            />
+          </Link>
+        </Box>
+        <Box width="50%" textAlign="right">
+          <IconButton onClick={toggleDrawer}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </Box>
+      </Toolbar>
+      <Divider />
+      <List component="nav">
+        <MainListItems closeDrawer={closeDrawer} />
+        <Divider sx={{ my: 1 }} />
+        <SecondaryListItems closeDrawer={closeDrawer} />
+      </List>
+    </>
+  );
+
   return (
     <>
-      <AppBar position="absolute" open={open}>
+      <AppBar position="absolute" open={open && !isPhone}>
         <Toolbar
           sx={{
             pr: "24px",
@@ -41,14 +80,14 @@ const Sidebar = () => {
             onClick={toggleDrawer}
             sx={{
               marginRight: "36px",
-              ...(open && { display: "none" }),
+              ...(open && !isPhone && { display: "none" }),
             }}
           >
             <MenuIcon />
           </IconButton>
           <Typography
             component="h1"
-            variant="h6"
+            variant="h5"
             color="inherit"
             noWrap
             sx={{ flexGrow: 1 }}
@@ -62,37 +101,15 @@ const Sidebar = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <Toolbar
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            px: [1],
-          }}
-        >
-          <Box width="50%">
-            <Link to="/">
-              <img
-                src={logo}
-                alt="Debrecen Student Locations"
-                width="50px"
-                height="50px"
-              />
-            </Link>
-          </Box>
-          <Box width="50%" textAlign="right">
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-        <Divider />
-        <List component="nav">
-          <MainListItems closeDrawer={closeDrawer} />
-          <Divider sx={{ my: 1 }} />
-          <SecondaryListItems closeDrawer={closeDrawer} />
-        </List>
-      </Drawer>
+      {isPhone ? (
+        <MobileDrawer open={open} closeDrawer={closeDrawer}>
+          {drawerContent()}
+        </MobileDrawer>
+      ) : (
+        <Drawer variant="permanent" open={open}>
+          {drawerContent()}
+        </Drawer>
+      )}
     </>
   );
 };
