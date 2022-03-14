@@ -18,7 +18,6 @@ const Map = ({ lat, lng, zoom, children, ...props }) => (
     })}
     defaultCenter={{ lat, lng }}
     defaultZoom={zoom}
-    onClick={(coord) => console.log(coord)}
     {...props}
   >
     {children}
