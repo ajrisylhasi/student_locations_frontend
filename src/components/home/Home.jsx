@@ -49,7 +49,7 @@ const HomeContent = () => {
             height: "100%",
           }}
         >
-          <Map lng={21.6286541} zoom={13.4} lat={47.5399565}>
+          <Map lng={21.6286541} zoom={14} lat={47.5399565}>
             {state.maps.allPlaces.map((place) => (
               <Marker
                 key={place.id}

@@ -1,6 +1,5 @@
-import * as React from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
-import { useContext } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -8,12 +7,19 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { storeContext } from "../provider/Provider";
-import { authActions } from "../../store/auth-reducer";
+import { storeContext } from "components/provider/Provider";
+import { authActions } from "store/auth-reducer";
+import Signal from "../../shared/components/Signal";
 
 const { REACT_APP_SITE_URL } = process.env;
 const Settings = () => {
   const { state, dispatch } = useContext(storeContext);
+  const [openMessage, setOpenMessage] = useState(false);
+  const [error, setError] = useState(false);
+
+  const handleCloseMessage = () => {
+    setOpenMessage(false);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,12 +34,17 @@ const Settings = () => {
       },
     };
     axios.patch(`${REACT_APP_SITE_URL}/api/me/`, data).then((res) => {
-      dispatch({
-        type: authActions.AUTH_SET_ALL,
-        payload: {
-          user: res.data,
-        },
-      });
+      if (res.status === 200) {
+        dispatch({
+          type: authActions.AUTH_SET_ALL,
+          payload: {
+            user: res.data,
+          },
+        });
+        setOpenMessage(true);
+      } else {
+        setError(true);
+      }
     });
   };
 
@@ -119,6 +130,21 @@ const Settings = () => {
         >
           Sign Up
         </Button>
+        {error ? (
+          <Signal
+            message="Something Went Wrong!"
+            type="error"
+            handleClose={handleCloseMessage}
+            open={openMessage}
+          />
+        ) : (
+          <Signal
+            message="Account Updated!"
+            type="success"
+            handleClose={handleCloseMessage}
+            open={openMessage}
+          />
+        )}
       </Box>
     </Box>
   );
