@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { useContext, useEffect } from "react";
 import { storeContext } from "components/provider/Provider";
+import { mapsActions } from "../../store/maps-reducer";
 
 const drawerBleeding = 56;
 
@@ -25,7 +26,7 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 const SwipeableEdgeDrawer = () => {
-  const { state } = useContext(storeContext);
+  const { state, dispatch } = useContext(storeContext);
   const [open, setOpen] = React.useState(false);
   useEffect(() => {
     setOpen(state.maps.selectedDrawer);
@@ -33,6 +34,12 @@ const SwipeableEdgeDrawer = () => {
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
+    dispatch({
+      type: mapsActions.MAPS_SET_ALL,
+      payload: {
+        selectedDrawer: newOpen,
+      },
+    });
   };
 
   return (
