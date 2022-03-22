@@ -7,6 +7,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import ThumbsUpDown from "@mui/icons-material/ThumbsUpDown";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import PropTypes from "prop-types";
 
 const MainListItems = ({ closeDrawer }) => {
@@ -42,6 +43,17 @@ const MainListItems = ({ closeDrawer }) => {
           <ThumbsUpDown />
         </ListItemIcon>
         <ListItemText primary="Reviews" />
+      </ListItemButton>
+      <ListItemButton
+        onClick={() => {
+          history.push("/");
+          closeDrawer();
+        }}
+      >
+        <ListItemIcon>
+          <AddCircleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Add a Place" />
       </ListItemButton>
     </>
   );

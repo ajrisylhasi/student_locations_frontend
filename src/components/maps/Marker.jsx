@@ -19,6 +19,7 @@ const Marker = ({ place }) => {
             type: mapsActions.MAPS_SET_ALL,
             payload: {
               selectedPlace: place,
+              selectedDrawer: true,
             },
           });
         }}

@@ -5,7 +5,9 @@ import Paper from "@mui/material/Paper";
 import Map from "components/maps/Map";
 import Marker from "components/maps/Marker";
 import axios from "axios";
+import Typography from "@mui/material/Typography";
 import { mapsActions } from "store/maps-reducer";
+import SwipeableEdgeDrawer from "./SwipeableEdgeDrawer";
 import { storeContext } from "../provider/Provider";
 
 const { REACT_APP_SITE_URL } = process.env;
@@ -24,9 +26,10 @@ const HomeContent = () => {
     });
   }, []);
 
+  useEffect(() => {}, [state.maps.selectedDrawer]);
   return (
     <Grid container spacing={3} sx={{ height: "100%" }}>
-      {!isPhone && (
+      {!isPhone ? (
         <Grid item xs={12} md={4} xl={2}>
           <Paper
             sx={{
@@ -36,9 +39,24 @@ const HomeContent = () => {
               height: "100%",
             }}
           >
-            <p>{state.maps.selectedPlace?.name}</p>
+            <Typography variant="h4" component="h4">
+              {state.maps.selectedPlace?.name}
+            </Typography>
+            <Typography variant="subtitle2" component="p" mt={2}>
+              {state.maps.selectedPlace?.category}
+            </Typography>
+            {state.maps.selectedPlace?.average_rating && (
+              <Typography variant="subtitle2" component="p" mt={2}>
+                Average Rating: {state.maps.selectedPlace?.average_rating}/5
+              </Typography>
+            )}
+            <Typography variant="body2" component="p" mt={2}>
+              {state.maps.selectedPlace?.description}
+            </Typography>
           </Paper>
         </Grid>
+      ) : (
+        <SwipeableEdgeDrawer />
       )}
       <Grid item xs={12} md={8} xl={10}>
         <Paper
@@ -50,7 +68,7 @@ const HomeContent = () => {
           }}
         >
           <Map lng={21.6286541} zoom={14} lat={47.5399565}>
-            {state.maps.allPlaces.map((place) => (
+            {state.maps.allPlaces?.map((place) => (
               <Marker
                 key={place.id}
                 lat={place.lat}
