@@ -31,7 +31,9 @@ const Marker = ({ place }) => {
 Marker.propTypes = {
   place: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    name: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    lat: PropTypes.number.isRequired,
+    lng: PropTypes.number.isRequired,
   }).isRequired,
 };
 

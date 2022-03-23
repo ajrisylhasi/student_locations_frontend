@@ -11,6 +11,8 @@ import Home from "components/home/Home";
 import { authActions } from "store/auth-reducer";
 import { storeContext } from "components/provider/Provider";
 import Sidebar from "components/layout/Sidebar";
+// import Signal from "../../shared/components/Signal";
+// import { layoutActions } from "../../store/layout-reducer";
 
 const { REACT_APP_SITE_URL } = process.env;
 

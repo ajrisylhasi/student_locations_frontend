@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
@@ -16,10 +16,12 @@ import Drawer from "shared/components/Drawer";
 import logo from "images/logo.svg";
 import MainListItems from "components/layout/MainListItems";
 import SecondaryListItems from "components/layout/SecondaryListItems";
-import MobileDrawer from "./MobileDrawer";
+import { storeContext } from "components/provider/Provider";
+import MobileDrawer from "components/layout/MobileDrawer";
 
 const Sidebar = () => {
   const [open, setOpen] = React.useState(false);
+  const { state } = useContext(storeContext);
 
   const isPhone = useMediaQuery({ query: "(max-width: 768px)" });
 
@@ -92,7 +94,7 @@ const Sidebar = () => {
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            Dashboard
+            {state.layout.pageTitle}
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={0} color="secondary">

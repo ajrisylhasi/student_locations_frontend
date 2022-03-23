@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -9,20 +9,27 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { storeContext } from "components/provider/Provider";
 import { authActions } from "store/auth-reducer";
+import Signal from "../../shared/components/Signal";
 import { layoutActions } from "../../store/layout-reducer";
 
 const { REACT_APP_SITE_URL } = process.env;
-const Settings = () => {
+const NewPlace = () => {
   const { state, dispatch } = useContext(storeContext);
 
   useEffect(() => {
     dispatch({
       type: layoutActions.LAYOUT_SET_ALL,
       payload: {
-        pageTitle: "Settings",
+        pageTitle: "Add New Place",
       },
     });
   }, []);
+  const [openMessage, setOpenMessage] = useState(false);
+  const [error, setError] = useState(false);
+
+  const handleCloseMessage = () => {
+    setOpenMessage(false);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -44,23 +51,9 @@ const Settings = () => {
             user: res.data,
           },
         });
-        dispatch({
-          type: layoutActions.LAYOUT_SET_ALL,
-          payload: {
-            openMessage: true,
-            error: false,
-            signalMessage: "Account Updated!",
-          },
-        });
+        setOpenMessage(true);
       } else {
-        dispatch({
-          type: layoutActions.LAYOUT_SET_ALL,
-          payload: {
-            openMessage: true,
-            error: true,
-            signalMessage: "Something went wrong!",
-          },
-        });
+        setError(true);
       }
     });
   };
@@ -145,11 +138,11 @@ const Settings = () => {
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
         >
-          Update Settings
+          Sign Up
         </Button>
       </Box>
     </Box>
   );
 };
 
-export default Settings;
+export default NewPlace;

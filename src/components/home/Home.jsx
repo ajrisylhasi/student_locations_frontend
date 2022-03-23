@@ -9,11 +9,21 @@ import { mapsActions } from "store/maps-reducer";
 import SelectedPlaceFields from "components/home/SelectedPlaceFields";
 import SwipeableEdgeDrawer from "./SwipeableEdgeDrawer";
 import { storeContext } from "../provider/Provider";
+import { layoutActions } from "../../store/layout-reducer";
 
 const { REACT_APP_SITE_URL } = process.env;
 const HomeContent = () => {
   const { state, dispatch } = useContext(storeContext);
   const isPhone = useMediaQuery({ query: "(max-width: 768px)" });
+
+  useEffect(() => {
+    dispatch({
+      type: layoutActions.LAYOUT_SET_ALL,
+      payload: {
+        pageTitle: "Dashboard",
+      },
+    });
+  }, []);
 
   useEffect(() => {
     axios.get(`${REACT_APP_SITE_URL}/api/places/`).then((res) => {
@@ -26,7 +36,6 @@ const HomeContent = () => {
     });
   }, []);
 
-  useEffect(() => {}, [state.maps.selectedDrawer]);
   return (
     <Grid container spacing={3} sx={{ height: "100%" }}>
       {!isPhone ? (

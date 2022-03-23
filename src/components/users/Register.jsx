@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
@@ -10,10 +10,13 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { storeContext } from "components/provider/Provider";
 import Copyright from "../../shared/components/Copyright";
+import { layoutActions } from "../../store/layout-reducer";
 
 const { REACT_APP_SITE_URL } = process.env;
 const Register = () => {
+  const { dispatch } = useContext(storeContext);
   const history = useHistory();
 
   const handleSubmit = (event) => {
@@ -26,9 +29,30 @@ const Register = () => {
         username: formData.get("username"),
       },
     };
-    axios.post(`${REACT_APP_SITE_URL}/api/users/`, data).then(() => {
-      history.push("/login");
-    });
+    axios
+      .post(`${REACT_APP_SITE_URL}/api/users/`, data)
+      .then(() => {
+        history.push("/login");
+        dispatch({
+          type: layoutActions.LAYOUT_SET_ALL,
+          payload: {
+            openMessage: true,
+            error: false,
+            signalMessage: "Account Registered!",
+          },
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: layoutActions.LAYOUT_SET_ALL,
+          payload: {
+            openMessage: true,
+            error: true,
+            signalMessage:
+              "Something went wrong! Password must be longer than 5 characters and username cannot be used twice.",
+          },
+        });
+      });
   };
 
   return (
