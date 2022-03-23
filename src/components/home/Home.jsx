@@ -5,8 +5,8 @@ import Paper from "@mui/material/Paper";
 import Map from "components/maps/Map";
 import Marker from "components/maps/Marker";
 import axios from "axios";
-import Typography from "@mui/material/Typography";
 import { mapsActions } from "store/maps-reducer";
+import SelectedPlaceFields from "components/home/SelectedPlaceFields";
 import SwipeableEdgeDrawer from "./SwipeableEdgeDrawer";
 import { storeContext } from "../provider/Provider";
 
@@ -39,20 +39,7 @@ const HomeContent = () => {
               height: "100%",
             }}
           >
-            <Typography variant="h4" component="h4">
-              {state.maps.selectedPlace?.name}
-            </Typography>
-            <Typography variant="subtitle2" component="p" mt={2}>
-              {state.maps.selectedPlace?.category}
-            </Typography>
-            {state.maps.selectedPlace?.average_rating && (
-              <Typography variant="subtitle2" component="p" mt={2}>
-                Average Rating: {state.maps.selectedPlace?.average_rating}/5
-              </Typography>
-            )}
-            <Typography variant="body2" component="p" mt={2}>
-              {state.maps.selectedPlace?.description}
-            </Typography>
+            <SelectedPlaceFields />
           </Paper>
         </Grid>
       ) : (

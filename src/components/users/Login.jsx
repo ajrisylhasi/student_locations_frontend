@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -17,12 +17,19 @@ import Link from "@mui/material/Link";
 import { storeContext } from "../provider/Provider";
 import Copyright from "../../shared/components/Copyright";
 import { authActions } from "../../store/auth-reducer";
+import Signal from "../../shared/components/Signal";
 
 const { REACT_APP_SITE_URL } = process.env;
 const Login = () => {
   const history = useHistory();
   const [cookies, setCookie] = useCookies(["auth"]);
   const { dispatch } = React.useContext(storeContext);
+  const [openMessage, setOpenMessage] = useState(false);
+  const [error, setError] = useState(false);
+
+  const handleCloseMessage = () => {
+    setOpenMessage(false);
+  };
 
   const logUser = (token) => {
     setCookie("id", token.data.token, {
@@ -37,8 +44,6 @@ const Login = () => {
     });
     history.push("/");
   };
-
-  const catchErrors = () => {};
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -51,10 +56,16 @@ const Login = () => {
     axios
       .post(`${REACT_APP_SITE_URL}/api/users/login/`, data)
       .then((res) => {
-        logUser(res);
+        setOpenMessage(true);
+        if (res.status === 200) {
+          logUser(res);
+        } else {
+          setError(true);
+        }
       })
-      .catch((e) => {
-        catchErrors(e?.response?.data.errors);
+      .catch(() => {
+        setOpenMessage(true);
+        setError(true);
       });
   };
 
@@ -128,6 +139,21 @@ const Login = () => {
           </Grid>
         </Box>
       </Box>
+      {error ? (
+        <Signal
+          message="Something went wrong! Please check your credentials and try again."
+          type="error"
+          handleClose={handleCloseMessage}
+          open={openMessage}
+        />
+      ) : (
+        <Signal
+          message="Account Updated!"
+          type="success"
+          handleClose={handleCloseMessage}
+          open={openMessage}
+        />
+      )}
       <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
   );

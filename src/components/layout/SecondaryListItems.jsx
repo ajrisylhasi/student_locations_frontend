@@ -3,7 +3,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ShareLocationIcon from "@mui/icons-material/ShareLocation";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useHistory } from "react-router-dom";
@@ -25,11 +25,16 @@ const SecondaryListItems = ({ closeDrawer }) => {
       <ListSubheader component="div" inset>
         Account Information
       </ListSubheader>
-      <ListItemButton>
+      <ListItemButton
+        onClick={() => {
+          history.push("/");
+          closeDrawer();
+        }}
+      >
         <ListItemIcon>
-          <AccountCircleIcon />
+          <ShareLocationIcon />
         </ListItemIcon>
-        <ListItemText primary="Profile" />
+        <ListItemText primary="My Places" />
       </ListItemButton>
       <ListItemButton
         onClick={() => {
