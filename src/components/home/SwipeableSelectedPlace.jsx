@@ -26,7 +26,7 @@ const Puller = styled(Box)(({ theme }) => ({
   left: "calc(50% - 15px)",
 }));
 
-const SwipeableEdgeDrawer = () => {
+const SwipeableSelectedPlace = () => {
   const { state, dispatch } = useContext(storeContext);
   const [open, setOpen] = React.useState(false);
   useEffect(() => {
@@ -79,9 +79,7 @@ const SwipeableEdgeDrawer = () => {
         >
           <Puller />
           <Typography sx={{ p: 2, color: "text.secondary" }}>
-            {state.maps.allPlaces?.length
-              ? `${state.maps.allPlaces?.length} Places`
-              : "No Places"}
+            {state.maps.allPlaces?.length ? `Selected Place` : "No Places"}
           </Typography>
         </StyledBox>
         <StyledBox
@@ -98,4 +96,4 @@ const SwipeableEdgeDrawer = () => {
     </>
   );
 };
-export default SwipeableEdgeDrawer;
+export default SwipeableSelectedPlace;

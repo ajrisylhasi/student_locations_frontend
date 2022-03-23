@@ -54,7 +54,7 @@ const MainListItems = ({ closeDrawer }) => {
       </ListItemButton>
       <ListItemButton
         onClick={() => {
-          history.push("/");
+          history.push("/new-place");
           closeDrawer();
         }}
       >

@@ -16,8 +16,8 @@ const Map = ({ lat, lng, zoom, children, ...props }) => (
       mapTypeControl: true,
       mapTypeId: map.MapTypeId.HYBRID,
     })}
-    defaultCenter={{ lat, lng }}
     defaultZoom={zoom}
+    center={{ lat, lng }}
     {...props}
   >
     {children}
@@ -28,7 +28,10 @@ Map.propTypes = {
   lat: PropTypes.number.isRequired,
   lng: PropTypes.number.isRequired,
   zoom: PropTypes.number.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
 
+Map.defaultProps = {
+  children: null,
+};
 export default Map;

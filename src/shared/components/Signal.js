@@ -6,7 +6,7 @@ const Signal = ({ open, handleClose, type, message }) => (
   <Snackbar
     open={open}
     autoHideDuration={5000}
-    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
     onClose={handleClose}
   >
     <Alert onClose={handleClose} severity={type} sx={{ width: "100%" }}>

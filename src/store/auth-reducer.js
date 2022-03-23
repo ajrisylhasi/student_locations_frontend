@@ -31,6 +31,7 @@ const initialAuthState = {
   },
 
   user: {
+    id: "",
     email: "",
     fullname: "",
     faculty: "",

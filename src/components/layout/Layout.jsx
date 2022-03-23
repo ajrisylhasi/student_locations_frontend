@@ -11,8 +11,8 @@ import Home from "components/home/Home";
 import { authActions } from "store/auth-reducer";
 import { storeContext } from "components/provider/Provider";
 import Sidebar from "components/layout/Sidebar";
-// import Signal from "../../shared/components/Signal";
-// import { layoutActions } from "../../store/layout-reducer";
+import NewPlace from "components/places/NewPlace";
+import MyPlaces from "components/places/MyPlaces";
 
 const { REACT_APP_SITE_URL } = process.env;
 
@@ -72,6 +72,12 @@ const Layout = () => {
           </Route>
           <Route path="/settings">
             <Settings />
+          </Route>
+          <Route path="/new-place">
+            <NewPlace />
+          </Route>
+          <Route path="/my-places">
+            <MyPlaces />
           </Route>
           {/* <Copyright sx={{ mt: 5 }} /> */}
         </Container>

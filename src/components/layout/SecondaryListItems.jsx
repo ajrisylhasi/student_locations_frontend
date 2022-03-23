@@ -27,7 +27,7 @@ const SecondaryListItems = ({ closeDrawer }) => {
       </ListSubheader>
       <ListItemButton
         onClick={() => {
-          history.push("/");
+          history.push("/my-places");
           closeDrawer();
         }}
       >

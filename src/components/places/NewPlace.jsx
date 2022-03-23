@@ -1,20 +1,39 @@
-import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import React, { useContext, useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
 import { storeContext } from "components/provider/Provider";
-import { authActions } from "store/auth-reducer";
-import Signal from "../../shared/components/Signal";
-import { layoutActions } from "../../store/layout-reducer";
+import Paper from "@mui/material/Paper";
+import { useMediaQuery } from "react-responsive";
+import Map from "components/maps/Map";
+import { layoutActions } from "store/layout-reducer";
+import SwipeablePlaceForm from "components/places/SwipeablePlaceForm";
+import NewPlaceForm from "components/places/NewPlaceForm";
+import { mapsActions } from "../../store/maps-reducer";
 
-const { REACT_APP_SITE_URL } = process.env;
 const NewPlace = () => {
-  const { state, dispatch } = useContext(storeContext);
+  const { dispatch } = useContext(storeContext);
+  const isPhone = useMediaQuery({ query: "(max-width: 768px)" });
+  const [center, setCenter] = useState({ lat: 47.5399565, lng: 21.6286541 });
+
+  const loadMap = (map, maps) => {
+    const marker = new maps.Marker({
+      position: center,
+      map,
+      draggable: true,
+    });
+
+    marker.addListener("dragend", (event) => {
+      setCenter({
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng(),
+      });
+      dispatch({
+        type: mapsActions.MAPS_SET_ALL,
+        payload: {
+          newPlaceForm: true,
+        },
+      });
+    });
+  };
 
   useEffect(() => {
     dispatch({
@@ -24,124 +43,46 @@ const NewPlace = () => {
       },
     });
   }, []);
-  const [openMessage, setOpenMessage] = useState(false);
-  const [error, setError] = useState(false);
-
-  const handleCloseMessage = () => {
-    setOpenMessage(false);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const data = {
-      user: {
-        username: formData.get("username"),
-        fullname: formData.get("fullname"),
-        faculty: formData.get("faculty"),
-        course: formData.get("course"),
-        nationality: formData.get("nationality"),
-      },
-    };
-    axios.patch(`${REACT_APP_SITE_URL}/api/me/`, data).then((res) => {
-      if (res.status === 200) {
-        dispatch({
-          type: authActions.AUTH_SET_ALL,
-          payload: {
-            user: res.data,
-          },
-        });
-        setOpenMessage(true);
-      } else {
-        setError(true);
-      }
-    });
-  };
 
   return (
-    <Box
-      maxWidth="sm"
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        margin: "auto",
-      }}
-    >
-      <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-        <LockOutlinedIcon />
-      </Avatar>
-      <Typography component="h1" variant="h5">
-        Profile Information
-      </Typography>
-      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              defaultValue={state.auth.user.username}
-              autoComplete="username"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              id="fullname"
-              label="Full Name"
-              name="fullname"
-              autoComplete="fullname"
-              defaultValue={state.auth.user.fullname}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="faculty"
-              label="Faculty"
-              id="faculty"
-              autoComplete="faculty"
-              defaultValue={state.auth.user.faculty}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="course"
-              label="Course"
-              id="course"
-              autoComplete="course"
-              defaultValue={state.auth.user.course}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="nationality"
-              label="Nationality"
-              id="nationality"
-              autoComplete="nationality"
-              defaultValue={state.auth.user.nationality}
-            />
-          </Grid>
+    <Grid container spacing={3} sx={{ height: "100%" }}>
+      {!isPhone ? (
+        <Grid item xs={12} md={5} xl={5}>
+          <Paper
+            sx={{
+              p: 2,
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              alignItems: "center",
+              margin: "auto",
+            }}
+          >
+            <NewPlaceForm center={center} />
+          </Paper>
         </Grid>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+      ) : (
+        <SwipeablePlaceForm center={center} />
+      )}
+      <Grid item xs={12} md={7} xl={7}>
+        <Paper
+          sx={{
+            p: 2,
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+          }}
         >
-          Sign Up
-        </Button>
-      </Box>
-    </Box>
+          <Map
+            lng={center.lng}
+            zoom={14}
+            lat={center.lat}
+            onGoogleApiLoaded={({ map, maps }) => loadMap(map, maps)}
+            yesIWantToUseGoogleMapApiInternals
+          />
+        </Paper>
+      </Grid>
+    </Grid>
   );
 };
 
