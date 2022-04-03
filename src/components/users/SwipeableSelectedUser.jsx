@@ -1,29 +1,29 @@
-import React, { useContext, useEffect } from "react";
+import * as React from "react";
 import { Global } from "@emotion/react";
-import PropTypes from "prop-types";
 import Typography from "@mui/material/Typography";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import { useContext, useEffect } from "react";
 import { storeContext } from "components/provider/Provider";
-import { mapsActions } from "store/maps-reducer";
-import NewPlaceForm from "components/places/NewPlaceForm";
 import StyledBox from "shared/components/StyledBox";
 import Puller from "shared/components/Puller";
+import { usersActions } from "store/users-reducer";
+import SelectedUserFields from "components/users/SelectedUserFields";
 
 const drawerBleeding = 56;
 
-const SwipeablePlaceForm = ({ center, place }) => {
+const SwipeableSelectedUser = () => {
   const { state, dispatch } = useContext(storeContext);
   const [open, setOpen] = React.useState(false);
   useEffect(() => {
-    setOpen(state.maps.newPlaceForm);
-  }, [state.maps.newPlaceForm]);
+    setOpen(state.users.selectedDrawer);
+  }, [state.users.selectedDrawer]);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
     dispatch({
-      type: mapsActions.MAPS_SET_ALL,
+      type: usersActions.USERS_SET_ALL,
       payload: {
-        newPlaceForm: newOpen,
+        selectedDrawer: newOpen,
       },
     });
   };
@@ -33,7 +33,7 @@ const SwipeablePlaceForm = ({ center, place }) => {
       <Global
         styles={{
           ".swipeable-drawer.MuiDrawer-root > .MuiPaper-root": {
-            height: `calc(70% - ${drawerBleeding}px)`,
+            height: `calc(50% - ${drawerBleeding}px)`,
             overflow: "visible",
             touchAction: "none",
           },
@@ -64,45 +64,21 @@ const SwipeablePlaceForm = ({ center, place }) => {
         >
           <Puller />
           <Typography sx={{ p: 2, color: "text.secondary" }}>
-            {place ? "Edit Place" : "Add New Place"}
+            {state.users.allUsers?.length ? `Selected User` : "No Users"}
           </Typography>
         </StyledBox>
         <StyledBox
           sx={{
             px: 2,
             pb: 2,
-            p: 2,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            margin: "auto",
             height: "100%",
             overflow: "auto",
           }}
         >
-          <NewPlaceForm place={place} center={center} />
+          <SelectedUserFields />
         </StyledBox>
       </SwipeableDrawer>
     </>
   );
 };
-
-SwipeablePlaceForm.propTypes = {
-  center: PropTypes.shape({
-    lat: PropTypes.number.isRequired,
-    lng: PropTypes.number.isRequired,
-  }).isRequired,
-  place: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    category: PropTypes.string,
-    description: PropTypes.string,
-    lng: PropTypes.number,
-    lat: PropTypes.number,
-  }),
-};
-
-SwipeablePlaceForm.defaultProps = {
-  place: null,
-};
-export default SwipeablePlaceForm;
+export default SwipeableSelectedUser;

@@ -6,14 +6,17 @@ import { useMediaQuery } from "react-responsive";
 import Map from "components/maps/Map";
 import { layoutActions } from "store/layout-reducer";
 import Marker from "components/maps/Marker";
-import SelectedPlaceFields from "components/home/SelectedPlaceFields";
-import SwipeableSelectedPlace from "components/home/SwipeableSelectedPlace";
+import SelectedPlaceFields from "components/places/SelectedPlaceFields";
+import SwipeableSelectedPlace from "components/places/SwipeableSelectedPlace";
 import axios from "axios";
+import Typography from "@mui/material/Typography";
+import { useParams } from "react-router-dom";
 import { mapsActions } from "../../store/maps-reducer";
 
 const { REACT_APP_SITE_URL } = process.env;
 
-const MyPlaces = () => {
+const Places = () => {
+  const { id } = useParams();
   const { state, dispatch } = useContext(storeContext);
   const isPhone = useMediaQuery({ query: "(max-width: 768px)" });
 
@@ -21,7 +24,7 @@ const MyPlaces = () => {
     dispatch({
       type: layoutActions.LAYOUT_SET_ALL,
       payload: {
-        pageTitle: "My Places",
+        pageTitle: id ? "User Places" : "My Places",
       },
     });
     dispatch({
@@ -30,14 +33,33 @@ const MyPlaces = () => {
   }, []);
 
   useEffect(() => {
-    axios.get(`${REACT_APP_SITE_URL}/api/me/places/`).then((res) => {
-      dispatch({
-        type: mapsActions.MAPS_SET_ALL,
-        payload: {
-          userPlaces: res.data,
-        },
+    axios
+      .get(`${REACT_APP_SITE_URL}/api/${id ? `users/${id}` : "me"}/places/`)
+      .then((res) => {
+        if (res.status === 200) {
+          dispatch({
+            type: mapsActions.MAPS_SET_ALL,
+            payload: {
+              userPlaces: res.data,
+            },
+          });
+          if (res.data.length > 0) {
+            dispatch({
+              type: mapsActions.MAPS_SET_ALL,
+              payload: {
+                selectedPlace: {
+                  ...state.maps.selectedPlace,
+                  id: res.data[0].id,
+                  name: res.data[0].name,
+                  category: res.data[0].category,
+                  description: res.data[0].description,
+                  current: res.data[0].current,
+                },
+              },
+            });
+          }
+        }
       });
-    });
   }, []);
 
   return (
@@ -54,23 +76,31 @@ const MyPlaces = () => {
               margin: "auto",
             }}
           >
-            <Map
-              lng={state.maps.selectedPlace.lng}
-              zoom={16}
-              lat={state.maps.selectedPlace.lat}
-              options={(map) => ({
-                disableDefaultUI: true,
-                rotateControl: false,
-                mapTypeId: map.MapTypeId.HYBRID,
-                fullscreenControl: true,
-              })}
-            >
-              <Marker
-                lat={state.maps.selectedPlace.lat}
-                lng={state.maps.selectedPlace.lng}
-              />
-            </Map>
-            <SelectedPlaceFields />
+            {state.maps.userPlaces.length > 0 ? (
+              <>
+                <Map
+                  lng={state.maps.selectedPlace.lng}
+                  zoom={16}
+                  lat={state.maps.selectedPlace.lat}
+                  options={(map) => ({
+                    disableDefaultUI: true,
+                    rotateControl: false,
+                    mapTypeId: map.MapTypeId.HYBRID,
+                    fullscreenControl: true,
+                  })}
+                >
+                  <Marker
+                    lat={state.maps.selectedPlace.lat}
+                    lng={state.maps.selectedPlace.lng}
+                  />
+                </Map>
+                <SelectedPlaceFields />
+              </>
+            ) : (
+              <Typography variant="p" component="p">
+                No Created Places
+              </Typography>
+            )}
           </Paper>
         </Grid>
       ) : (
@@ -113,4 +143,4 @@ const MyPlaces = () => {
   );
 };
 
-export default MyPlaces;
+export default Places;

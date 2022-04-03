@@ -1,30 +1,14 @@
-import * as React from "react";
+import React, { useContext, useEffect } from "react";
 import { Global } from "@emotion/react";
-import { styled } from "@mui/material/styles";
-import { grey } from "@mui/material/colors";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { useContext, useEffect } from "react";
 import { storeContext } from "components/provider/Provider";
-import SelectedPlaceFields from "components/home/SelectedPlaceFields";
+import SelectedPlaceFields from "components/places/SelectedPlaceFields";
 import { mapsActions } from "store/maps-reducer";
+import StyledBox from "shared/components/StyledBox";
+import Puller from "shared/components/Puller";
 
 const drawerBleeding = 56;
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "light" ? "#fff" : grey[800],
-}));
-
-const Puller = styled(Box)(({ theme }) => ({
-  width: 30,
-  height: 6,
-  backgroundColor: theme.palette.mode === "light" ? grey[300] : grey[900],
-  borderRadius: 3,
-  position: "absolute",
-  top: 8,
-  left: "calc(50% - 15px)",
-}));
 
 const SwipeableSelectedPlace = () => {
   const { state, dispatch } = useContext(storeContext);
@@ -79,7 +63,7 @@ const SwipeableSelectedPlace = () => {
         >
           <Puller />
           <Typography sx={{ p: 2, color: "text.secondary" }}>
-            {state.maps.allPlaces?.length ? `Selected Place` : "No Places"}
+            {state.maps.allPlaces?.length ? `Selected Place` : "No Events"}
           </Typography>
         </StyledBox>
         <StyledBox

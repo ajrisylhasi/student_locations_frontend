@@ -6,8 +6,8 @@ import Map from "components/maps/Map";
 import Marker from "components/maps/Marker";
 import axios from "axios";
 import { mapsActions } from "store/maps-reducer";
-import SelectedPlaceFields from "components/home/SelectedPlaceFields";
-import SwipeableSelectedPlace from "./SwipeableSelectedPlace";
+import SelectedPlaceFields from "components/places/SelectedPlaceFields";
+import SwipeableSelectedPlace from "../places/SwipeableSelectedPlace";
 import { storeContext } from "../provider/Provider";
 import { layoutActions } from "../../store/layout-reducer";
 

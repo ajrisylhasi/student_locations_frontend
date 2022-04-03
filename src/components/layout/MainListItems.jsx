@@ -5,8 +5,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
-import BookmarksIcon from "@mui/icons-material/Bookmarks";
-import ThumbsUpDown from "@mui/icons-material/ThumbsUpDown";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
@@ -28,29 +26,27 @@ const MainListItems = ({ closeDrawer }) => {
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
       </ListItemButton>
-      <ListItemButton>
+      <ListItemButton
+        onClick={() => {
+          history.push("/events");
+          closeDrawer();
+        }}
+      >
         <ListItemIcon>
           <EventAvailableIcon />
         </ListItemIcon>
         <ListItemText primary="Events" />
       </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <BookmarksIcon />
-        </ListItemIcon>
-        <ListItemText primary="Favorite Locations" />
-      </ListItemButton>
-      <ListItemButton>
+      <ListItemButton
+        onClick={() => {
+          history.push("/users");
+          closeDrawer();
+        }}
+      >
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
         <ListItemText primary="Users" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <ThumbsUpDown />
-        </ListItemIcon>
-        <ListItemText primary="Reviews" />
       </ListItemButton>
       <ListItemButton
         onClick={() => {
@@ -66,7 +62,7 @@ const MainListItems = ({ closeDrawer }) => {
 
       <ListItemButton
         onClick={() => {
-          history.push("/");
+          history.push("/new-event");
           closeDrawer();
         }}
       >

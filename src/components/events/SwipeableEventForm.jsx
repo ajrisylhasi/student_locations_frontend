@@ -1,29 +1,29 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Global } from "@emotion/react";
 import PropTypes from "prop-types";
 import Typography from "@mui/material/Typography";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { storeContext } from "components/provider/Provider";
-import { mapsActions } from "store/maps-reducer";
-import NewPlaceForm from "components/places/NewPlaceForm";
+import { eventsActions } from "store/events-reducer";
 import StyledBox from "shared/components/StyledBox";
 import Puller from "shared/components/Puller";
+import NewEventForm from "components/events/NewEventForm";
 
 const drawerBleeding = 56;
 
-const SwipeablePlaceForm = ({ center, place }) => {
+const SwipeableEventForm = ({ place }) => {
   const { state, dispatch } = useContext(storeContext);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
-    setOpen(state.maps.newPlaceForm);
-  }, [state.maps.newPlaceForm]);
+    setOpen(state.events.newEventForm);
+  }, [state.events.newEventForm]);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
     dispatch({
-      type: mapsActions.MAPS_SET_ALL,
+      type: eventsActions.EVENTS_SET_ALL,
       payload: {
-        newPlaceForm: newOpen,
+        newEventForm: newOpen,
       },
     });
   };
@@ -64,7 +64,7 @@ const SwipeablePlaceForm = ({ center, place }) => {
         >
           <Puller />
           <Typography sx={{ p: 2, color: "text.secondary" }}>
-            {place ? "Edit Place" : "Add New Place"}
+            Add New Event
           </Typography>
         </StyledBox>
         <StyledBox
@@ -80,29 +80,22 @@ const SwipeablePlaceForm = ({ center, place }) => {
             overflow: "auto",
           }}
         >
-          <NewPlaceForm place={place} center={center} />
+          <NewEventForm place={place} />
         </StyledBox>
       </SwipeableDrawer>
     </>
   );
 };
 
-SwipeablePlaceForm.propTypes = {
-  center: PropTypes.shape({
-    lat: PropTypes.number.isRequired,
-    lng: PropTypes.number.isRequired,
-  }).isRequired,
+SwipeableEventForm.propTypes = {
   place: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
-    category: PropTypes.string,
-    description: PropTypes.string,
-    lng: PropTypes.number,
-    lat: PropTypes.number,
   }),
 };
 
-SwipeablePlaceForm.defaultProps = {
+SwipeableEventForm.defaultProps = {
   place: null,
 };
-export default SwipeablePlaceForm;
+
+export default SwipeableEventForm;

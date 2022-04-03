@@ -5,6 +5,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import ShareLocationIcon from "@mui/icons-material/ShareLocation";
 import SettingsIcon from "@mui/icons-material/Settings";
+import AddTaskIcon from "@mui/icons-material/AddTask";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -27,7 +28,18 @@ const SecondaryListItems = ({ closeDrawer }) => {
       </ListSubheader>
       <ListItemButton
         onClick={() => {
-          history.push("/my-places");
+          history.push("/my-participations");
+          closeDrawer();
+        }}
+      >
+        <ListItemIcon>
+          <AddTaskIcon />
+        </ListItemIcon>
+        <ListItemText primary="My Participations" />
+      </ListItemButton>
+      <ListItemButton
+        onClick={() => {
+          history.push("/places");
           closeDrawer();
         }}
       >
