@@ -1,5 +1,5 @@
 import Typography from "@mui/material/Typography";
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -7,25 +7,16 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import axios from "axios";
-import { participationsActions } from "store/participations-reducer";
-import { storeContext } from "components/provider/Provider";
 import getDate from "shared/utils/formattedDate";
 
 const { REACT_APP_SITE_URL } = process.env;
-const SelectedParticipationFields = ({ participation }) => {
-  const { state, dispatch } = useContext(storeContext);
+const SelectedParticipationFields = ({ participation, refresh }) => {
   const handleCancel = () => {
     axios
       .patch(`${REACT_APP_SITE_URL}/api/participations/${participation.id}`)
       .then((res) => {
         if (res.status === 200) {
-          axios.get(`${REACT_APP_SITE_URL}/api/me/participations/`);
-          dispatch({
-            type: participationsActions.PARTICIPATIONS_SET_ALL,
-            payload: {
-              allParticipations: res.data,
-            },
-          });
+          refresh();
         }
       });
   };
@@ -59,6 +50,7 @@ SelectedParticipationFields.propTypes = {
     name: PropTypes.string,
     time: PropTypes.string,
   }).isRequired,
+  refresh: PropTypes.func.isRequired,
 };
 
 export default SelectedParticipationFields;

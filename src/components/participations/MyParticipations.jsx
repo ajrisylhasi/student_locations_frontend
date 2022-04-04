@@ -22,22 +22,25 @@ const Events = () => {
     });
   }, []);
 
-  useEffect(() => {
+  const refreshParticipations = () => {
     axios.get(`${REACT_APP_SITE_URL}/api/me/participations/`).then((res) => {
       if (res.status === 200) {
         dispatch({
           type: participationsActions.PARTICIPATIONS_SET_ALL,
           payload: {
-            allEvents: res.data,
+            allParticipations: res.data,
           },
         });
       }
     });
+  };
+  useEffect(() => {
+    refreshParticipations();
   }, []);
 
   return (
     <Grid container spacing={3} sx={{ height: "100%" }} pb={2}>
-      {state.participations.allEvents.length === 0 && (
+      {state.participations.allParticipations.length === 0 && (
         <Grid item xs={12} md={6} xl={4}>
           <Paper
             sx={{
@@ -62,7 +65,10 @@ const Events = () => {
               minHeight: 140,
             }}
           >
-            <SelectedParticipationFields participation={participation} />
+            <SelectedParticipationFields
+              participation={participation}
+              refresh={refreshParticipations}
+            />
           </Paper>
         </Grid>
       ))}

@@ -44,7 +44,7 @@ const Events = () => {
     });
   }, [placeId, userId]);
 
-  useEffect(() => {
+  const refreshEvents = () => {
     axios
       .get(`${REACT_APP_SITE_URL}/api/${getRequest()}events/`)
       .then((res) => {
@@ -57,6 +57,10 @@ const Events = () => {
           });
         }
       });
+  };
+
+  useEffect(() => {
+    refreshEvents();
   }, [userId, placeId]);
 
   return (
@@ -86,7 +90,7 @@ const Events = () => {
               minHeight: 140,
             }}
           >
-            <SelectedEventFields event={event} />
+            <SelectedEventFields event={event} refresh={refreshEvents} />
           </Paper>
         </Grid>
       ))}

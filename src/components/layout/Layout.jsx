@@ -17,6 +17,7 @@ import Users from "components/users/Users";
 import Events from "components/events/Events";
 import NewEvent from "components/events/NewEvent";
 import EditPlace from "components/places/EditPlace";
+import MyParticipations from "components/participations/MyParticipations";
 
 const { REACT_APP_SITE_URL } = process.env;
 
@@ -85,6 +86,9 @@ const Layout = () => {
             </Route>
             <Route exact path={["/new-event", "/new-event/:placeId"]}>
               <NewEvent />
+            </Route>
+            <Route exact path="/my-participations">
+              <MyParticipations />
             </Route>
             <Route exact path={["/users/:id/places", "/places"]}>
               <Places />
