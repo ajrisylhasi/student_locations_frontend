@@ -13,9 +13,9 @@ const { REACT_APP_SITE_URL } = process.env;
 const SelectedParticipationFields = ({ participation, refresh }) => {
   const handleCancel = () => {
     axios
-      .patch(`${REACT_APP_SITE_URL}/api/participations/${participation.id}`)
+      .delete(`${REACT_APP_SITE_URL}/api/participations/${participation.id}`)
       .then((res) => {
-        if (res.status === 200) {
+        if (res.status === 204) {
           refresh();
         }
       });
@@ -24,6 +24,9 @@ const SelectedParticipationFields = ({ participation, refresh }) => {
     <>
       <Typography variant="h5" component="p" mt={2}>
         Place Name: {participation.name}
+      </Typography>
+      <Typography variant="h5" component="p" mt={2}>
+        Event Name: {participation.event_name}
       </Typography>
       <Grid container display="flex" flexWrap="wrap">
         <Grid item xs={12} md={6}>
@@ -47,6 +50,7 @@ const SelectedParticipationFields = ({ participation, refresh }) => {
 SelectedParticipationFields.propTypes = {
   participation: PropTypes.shape({
     id: PropTypes.number,
+    event_name: PropTypes.string,
     name: PropTypes.string,
     time: PropTypes.string,
   }).isRequired,

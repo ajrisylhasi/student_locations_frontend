@@ -44,23 +44,25 @@ const SelectedEventFields = ({ event, refresh }) => {
             Time: {getDate(event.time)}
           </Typography>
         </Grid>
-        <Grid item xs={12} md={6} textAlign="right">
-          {event.participated ? (
-            <ListItemButton onClick={handleCancel}>
-              <ListItemIcon>
-                <CancelIcon />
-              </ListItemIcon>
-              <ListItemText primary="Cancel" />
-            </ListItemButton>
-          ) : (
-            <ListItemButton onClick={handleParticipate}>
-              <ListItemIcon>
-                <AddIcon />
-              </ListItemIcon>
-              <ListItemText primary="Participate" />
-            </ListItemButton>
-          )}
-        </Grid>
+        {!event.passed && (
+          <Grid item xs={12} md={6} textAlign="right">
+            {event.participated ? (
+              <ListItemButton onClick={handleCancel}>
+                <ListItemIcon>
+                  <CancelIcon />
+                </ListItemIcon>
+                <ListItemText primary="Cancel" />
+              </ListItemButton>
+            ) : (
+              <ListItemButton onClick={handleParticipate}>
+                <ListItemIcon>
+                  <AddIcon />
+                </ListItemIcon>
+                <ListItemText primary="Participate" />
+              </ListItemButton>
+            )}
+          </Grid>
+        )}  
       </Grid>
     </>
   );
@@ -72,6 +74,7 @@ SelectedEventFields.propTypes = {
     name: PropTypes.string,
     time: PropTypes.string,
     participated: PropTypes.bool,
+    passed: PropTypes.bool
   }).isRequired,
   refresh: PropTypes.func.isRequired,
 };
